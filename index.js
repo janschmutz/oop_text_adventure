@@ -67,11 +67,48 @@ function weapon() {
         weapon();
     }
 }
-
+console.log(myPlayer);
 console.log('Gut vorbereited trittst du nun dem mächtigen Drachen entgegen');
+var dragonFoe = new Dragon('Artonix der Mächtige', 3, 4);
 
-var dragonFoe = new Dragon('Artonix der Mächtige', 3, 3);
-dragonFoe.speak();
+fight();
+function fight () {
+    console.log(dragonFoe);
+    console.log(myPlayer);
+    console.log("Du kannst den Drachen angreifen oder weglaufen\n" +
+        "A  -  Angreifen\n" +
+        "B  -  Weglaufen\n"
+    );
+    var action = prompt("Wähle A oder B: ");
+
+    if(action == 'A' || action == 'a'){
+        var attackValue = myPlayer.attack();
+        console.log(attackValue);
+        dragonFoe.defend(attackValue);
+
+        if (dragonFoe._leben < 1){
+            console.log('DU HAST DEN DRACHEN BESIEGT!');
+            process.exit(22);
+        }
+
+        console.log('Jetzt greift der Drache an!');
+        var attackVal = dragonFoe.attack();
+        console.log(attackVal);
+        myPlayer.defend(attackVal);
+
+        if (myPlayer._leben < 1){
+            console.log('Der Drache hat gewonnen, verschont dich aber weil du mutig gekämpft hast');
+        }
+        fight();
+
+    } else {
+        console.log('Der Drache jagd und tötet dich ' + myPlayer._name + '\n' +
+            'GAME OVER');
+        process.exit(22);
+    }
+}
+
+
 
 
 console.log('\n To be continued ....');
